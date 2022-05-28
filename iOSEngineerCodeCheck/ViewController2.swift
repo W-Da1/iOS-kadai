@@ -43,17 +43,14 @@ class ViewController2: UIViewController {
         
         titleLabel.text = gitRepository["full_name"] as? String
         
-        if let owner = gitRepository["owner"] as? [String: Any] {
-            if let imgURL = owner["avatar_url"] as? String {
-                URLSession.shared.dataTask(with: URL(string: imgURL)!) { (data, res, err) in
-                    let img = UIImage(data: data!)!
-                    DispatchQueue.main.async {
-                        self.imageView.image = img
-                    }
-                }.resume()
+        guard let owner = gitRepository["owner"] as? [String: Any] else {return}
+        guard let imgURL = owner["avatar_url"] as? String else {return}
+        URLSession.shared.dataTask(with: URL(string: imgURL)!) { (data, res, err) in
+            guard let data = data else {return}
+            guard let img = UIImage(data: data) else {return}
+            DispatchQueue.main.async {
+                self.imageView.image = img
             }
-        }
-        
+        }.resume()
     }
-    
 }

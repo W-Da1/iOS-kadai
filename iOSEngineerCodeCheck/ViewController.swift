@@ -40,10 +40,10 @@ class ViewController: UITableViewController, UISearchBarDelegate {
         repositoryURL = "https://api.github.com/search/repositories?q=\(searchWord!)"
         guard let url = URL(string : repositoryURL) else {return}
         urlSessionTask  = URLSession.shared.dataTask(with: url) { (data, response, error) in
-        guard let data = data else {return}
-        guard let obj = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else {return}
-        guard let items = obj["items"] as? [[String: Any]] else {return}
-        self.githubRepository = items
+            guard let data = data else {return}
+            guard let obj = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else {return}
+            guard let items = obj["items"] as? [[String: Any]] else {return}
+            self.githubRepository = items
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
@@ -66,7 +66,7 @@ class ViewController: UITableViewController, UISearchBarDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "Detail" {
-            let detailViewController = segue.destination as! ViewController2
+            guard let detailViewController = segue.destination as? ViewController2 else {return}
             detailViewController.viewController1 = self
         }
         
