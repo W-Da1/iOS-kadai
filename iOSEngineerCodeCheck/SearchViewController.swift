@@ -1,14 +1,14 @@
 //
-//  ViewController.swift
+//  SearchViewController.swift
 //  iOSEngineerCodeCheck
 //
-//  Created by 史 翔新 on 2020/04/20.
+//  Created by 渡辺大智 on 2022/05/29.
 //  Copyright © 2020 YUMEMI Inc. All rights reserved.
 //
 
 import UIKit
 
-class ViewController: UITableViewController, UISearchBarDelegate {
+class SearchViewController: UITableViewController, UISearchBarDelegate {
 
     @IBOutlet weak var SearchBar: UISearchBar!
     

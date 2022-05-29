@@ -2,13 +2,13 @@
 //  ViewController2.swift
 //  iOSEngineerCodeCheck
 //
-//  Created by 史 翔新 on 2020/04/21.
+//  Created by 渡辺大智 on 2022/05/22.
 //  Copyright © 2020 YUMEMI Inc. All rights reserved.
 //
 
 import UIKit
 
-class ViewController2: UIViewController {
+class DetailViewController: UIViewController {
     
     @IBOutlet weak var imageView: UIImageView!
     
@@ -21,13 +21,13 @@ class ViewController2: UIViewController {
     @IBOutlet weak var forksLabel: UILabel!
     @IBOutlet weak var isuuesLabel: UILabel!
     
-    var viewController1: ViewController!
+    var searchViewController: SearchViewController!
         
     override func viewDidLoad() {
         super.viewDidLoad()
   
-        guard let index = viewController1.touchedCellIndex else {return}
-        let gitRepository = viewController1.githubRepositories[index]
+        guard let index = searchViewController.touchedCellIndex else {return}
+        let gitRepository = searchViewController.githubRepositories[index]
         
         programLangageLabel.text = "Written in \(gitRepository["language"] as? String ?? "")"
         starsLabel.text = "\(gitRepository["stargazers_count"] as? Int ?? 0) stars"
