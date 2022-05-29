@@ -31,7 +31,7 @@ class ViewController2: UIViewController {
         
         programLangageLabel.text = "Written in \(gitRepository["language"] as? String ?? "")"
         starsLabel.text = "\(gitRepository["stargazers_count"] as? Int ?? 0) stars"
-        watchersLabel.text = "\(gitRepository["wachers_count"] as? Int ?? 0) watchers"
+        watchersLabel.text = "\(gitRepository["watchers_count"] as? Int ?? 0) watchers" //APIの使用が変更されwatchers_countはstargazers_countの数値が出力されるとのこと
         forksLabel.text = "\(gitRepository["forks_count"] as? Int ?? 0) forks"
         isuuesLabel.text = "\(gitRepository["open_issues_count"] as? Int ?? 0) open issues"
         getImage(gitRepository)
@@ -43,11 +43,11 @@ class ViewController2: UIViewController {
         
         guard let owner = gitRepository["owner"] as? [String: Any] else {return}
         guard let imgURL = owner["avatar_url"] as? String else {return}
-        URLSession.shared.dataTask(with: URL(string: imgURL)!) { (data, res, err) in
+        URLSession.shared.dataTask(with: URL(string: imgURL)!) { [weak self] (data, res, err) in
             guard let data = data else {return}
             guard let img = UIImage(data: data) else {return}
             DispatchQueue.main.async {
-                self.imageView.image = img
+                self?.imageView.image = img
             }
         }.resume()
     }
