@@ -25,21 +25,19 @@ class ViewController2: UIViewController {
         
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let gitRepository = viewController1.githubRepository[viewController1.touchedCellIndex]
+  
+        guard let index = viewController1.touchedCellIndex else {return}
+        let gitRepository = viewController1.githubRepositories[index]
         
         programLangageLabel.text = "Written in \(gitRepository["language"] as? String ?? "")"
         starsLabel.text = "\(gitRepository["stargazers_count"] as? Int ?? 0) stars"
         watchersLabel.text = "\(gitRepository["wachers_count"] as? Int ?? 0) watchers"
         forksLabel.text = "\(gitRepository["forks_count"] as? Int ?? 0) forks"
         isuuesLabel.text = "\(gitRepository["open_issues_count"] as? Int ?? 0) open issues"
-        getImage()
-        
+        getImage(gitRepository)
     }
     
-    func getImage(){
-        
-        let gitRepository = viewController1.githubRepository[viewController1.touchedCellIndex]
+    func getImage(_ gitRepository : [String: Any]){
         
         titleLabel.text = gitRepository["full_name"] as? String
         

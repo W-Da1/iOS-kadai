@@ -12,12 +12,10 @@ class ViewController: UITableViewController, UISearchBarDelegate {
 
     @IBOutlet weak var SearchBar: UISearchBar!
     
-    var githubRepository: [[String: Any]]=[]
+    var githubRepositories: [[String: Any]]=[]
     
     var urlSessionTask: URLSessionTask?
-    var searchWord: String!
-    var repositoryURL: String!
-    var touchedCellIndex: Int!
+    var touchedCellIndex: Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,14 +34,14 @@ class ViewController: UITableViewController, UISearchBarDelegate {
         urlSessionTask?.cancel()
     }
     
-    func dataGetFromURL() {
-        repositoryURL = "https://api.github.com/search/repositories?q=\(searchWord!)"
+    func dataGetFromURL(_ searchWord : String) {
+        let repositoryURL = "https://api.github.com/search/repositories?q=\(searchWord)"
         guard let url = URL(string : repositoryURL) else {return}
         urlSessionTask  = URLSession.shared.dataTask(with: url) { (data, response, error) in
             guard let data = data else {return}
             guard let obj = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else {return}
             guard let items = obj["items"] as? [[String: Any]] else {return}
-            self.githubRepository = items
+            self.githubRepositories = items
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
@@ -52,11 +50,11 @@ class ViewController: UITableViewController, UISearchBarDelegate {
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        
-        searchWord = searchBar.text!
+
+        guard let searchWord = searchBar.text else {return}
         
         if searchWord.count != 0 {
-            dataGetFromURL()
+            dataGetFromURL(searchWord)
         // タスク(githubからデータ読み込み)開始
             urlSessionTask?.resume()
         }
@@ -73,13 +71,13 @@ class ViewController: UITableViewController, UISearchBarDelegate {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return githubRepository.count
+        return githubRepositories.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = UITableViewCell()
-        let repositoryData = githubRepository[indexPath.row]
+        let repositoryData = githubRepositories[indexPath.row]
         cell.textLabel?.text = repositoryData["full_name"] as? String ?? ""
         cell.detailTextLabel?.text = repositoryData["language"] as? String ?? ""
         cell.tag = indexPath.row
