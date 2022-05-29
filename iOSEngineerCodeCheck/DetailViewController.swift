@@ -1,8 +1,8 @@
 //
-//  ViewController2.swift
+//  SearchViewController.swift
 //  iOSEngineerCodeCheck
 //
-//  Created by 渡辺大智 on 2022/05/22.
+//  Created by 渡辺大智 on 2022/05/29.
 //  Copyright © 2020 YUMEMI Inc. All rights reserved.
 //
 

@@ -35,37 +35,37 @@ class SearchViewController: UITableViewController, UISearchBarDelegate {
     }
     
     func executeSessionTask(_ searchWord : String) {
-        let repositoryURL = "https://api.github.com/search/repositories?q=\(searchWord)"
-        guard let url = URL(string : repositoryURL) else {return}
-        urlSessionTask  = URLSession.shared.dataTask(with: url) { [weak self] (data, response, error) in
-            guard let data = data else {return}
-            guard let obj = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else {return}
-            guard let items = obj["items"] as? [[String: Any]] else {return}
-            self?.githubRepositories = items
-            DispatchQueue.main.async {
-                self?.tableView.reloadData()
+        if searchWord.count != 0 {
+            let repositoryURL = "https://api.github.com/search/repositories?q=\(searchWord)"
+            guard let url = URL(string : repositoryURL) else {return}
+            urlSessionTask  = URLSession.shared.dataTask(with: url) { [weak self] (data, response, error) in
+                guard let data = data else {return}
+                guard let obj = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else {return}
+                guard let items = obj["items"] as? [[String: Any]] else {return}
+                self?.githubRepositories = items
+                DispatchQueue.main.async {
+                    self?.tableView.reloadData()
+                }
             }
+            // タスク(githubからデータ読み込み)開始
+            urlSessionTask?.resume()
         }
-        // タスク(githubからデータ読み込み)開始
-        urlSessionTask?.resume()
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
 
         guard let searchWord = searchBar.text else {return}
         
-        if searchWord.count != 0 {
-            // urlに含められない形式のsearchWordやリポジトリからのデータの受け取りに失敗した時は何もしない
-            executeSessionTask(searchWord)
-        }
-        
+        // urlに含められない形式のsearchWordやリポジトリからのデータの受け取りに失敗した時は何もしない
+        executeSessionTask(searchWord)
+
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "Detail" {
-            guard let detailViewController = segue.destination as? ViewController2 else {return}
-            detailViewController.viewController1 = self
+            guard let detailViewController = segue.destination as? DetailViewController else {return}
+            detailViewController.searchViewController = self
         }
         
     }
