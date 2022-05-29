@@ -8,7 +8,7 @@
 
 import UIKit
 
-class detailViewController: UIViewController {
+class DetailViewController: UIViewController {
     
     @IBOutlet weak var imageView: UIImageView!
     
@@ -21,7 +21,7 @@ class detailViewController: UIViewController {
     @IBOutlet weak var forksLabel: UILabel!
     @IBOutlet weak var isuuesLabel: UILabel!
     
-    var searchVC: searchViewController!
+    var searchVC: SearchViewController!
         
     override func viewDidLoad() {
         super.viewDidLoad()

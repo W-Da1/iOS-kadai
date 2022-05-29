@@ -1,14 +1,14 @@
 //
-//  ViewController.swift
+//  searchViewController.swift
 //  iOSEngineerCodeCheck
 //
-//  Created by 史 翔新 on 2020/04/20.
+//  Created by 渡辺大智 on 2022/05/29.
 //  Copyright © 2020 YUMEMI Inc. All rights reserved.
 //
 
 import UIKit
 
-class searchViewController: UITableViewController, UISearchBarDelegate {
+class SearchViewController: UITableViewController, UISearchBarDelegate {
 
     @IBOutlet weak var SearchBar: UISearchBar!
     
@@ -64,8 +64,8 @@ class searchViewController: UITableViewController, UISearchBarDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "Detail" {
-            guard let detailViewController = segue.destination as? detailViewController else {return}
-            detailViewController.searchVC = self
+            guard let detailVC = segue.destination as? DetailViewController  else {return}
+            detailVC.searchVC = self
         }
         
     }
