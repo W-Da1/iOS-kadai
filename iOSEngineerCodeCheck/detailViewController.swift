@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController2: UIViewController {
+class detailViewController: UIViewController {
     
     @IBOutlet weak var imageView: UIImageView!
     
@@ -21,13 +21,13 @@ class ViewController2: UIViewController {
     @IBOutlet weak var forksLabel: UILabel!
     @IBOutlet weak var isuuesLabel: UILabel!
     
-    var viewController1: ViewController!
+    var searchVC: searchViewController!
         
     override func viewDidLoad() {
         super.viewDidLoad()
   
-        guard let index = viewController1.touchedCellIndex else {return}
-        let gitRepository = viewController1.githubRepositories[index]
+        guard let index = searchVC.touchedCellIndex else {return}
+        let gitRepository = searchVC.githubRepositories[index]
         
         programLangageLabel.text = "Written in \(gitRepository["language"] as? String ?? "")"
         starsLabel.text = "\(gitRepository["stargazers_count"] as? Int ?? 0) stars"

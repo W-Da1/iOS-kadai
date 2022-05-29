@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UITableViewController, UISearchBarDelegate {
+class searchViewController: UITableViewController, UISearchBarDelegate {
 
     @IBOutlet weak var SearchBar: UISearchBar!
     
@@ -64,8 +64,8 @@ class ViewController: UITableViewController, UISearchBarDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "Detail" {
-            guard let detailViewController = segue.destination as? ViewController2 else {return}
-            detailViewController.viewController1 = self
+            guard let detailViewController = segue.destination as? detailViewController else {return}
+            detailViewController.searchVC = self
         }
         
     }
