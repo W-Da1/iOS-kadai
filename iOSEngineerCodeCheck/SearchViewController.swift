@@ -12,10 +12,7 @@ class SearchViewController: UITableViewController, UISearchBarDelegate {
 
     @IBOutlet weak var SearchBar: UISearchBar!
     
-    var githubRepositories: [[String: Any]]=[]
-    
-    var urlSessionTask: URLSessionTask?
-    var touchedCellIndex: Int?
+    var githubData = GithubData()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,23 +28,9 @@ class SearchViewController: UITableViewController, UISearchBarDelegate {
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        urlSessionTask?.cancel()
-    }
-    
-    func executeSessionTask(_ searchWord : String) {
-        let repositoryURL = "https://api.github.com/search/repositories?q=\(searchWord)"
-        guard let url = URL(string : repositoryURL) else {return}
-        urlSessionTask  = URLSession.shared.dataTask(with: url) { [weak self] (data, response, error) in
-            guard let data = data else {return}
-            guard let obj = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else {return}
-            guard let items = obj["items"] as? [[String: Any]] else {return}
-            self?.githubRepositories = items
-            DispatchQueue.main.async {
-                self?.tableView.reloadData()
-            }
+        if githubData.urlSessionTask != nil {
+            githubData.urlSessionTask?.cancel()
         }
-        // タスク(githubからデータ読み込み)開始
-        urlSessionTask?.resume()
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -56,7 +39,13 @@ class SearchViewController: UITableViewController, UISearchBarDelegate {
         
         if searchWord.count != 0 {
             // urlに含められない形式のsearchWordやリポジトリからのデータの受け取りに失敗した時は何もしない
-            executeSessionTask(searchWord)
+            githubData.createURLSessionTask(searchWord)
+            if githubData.urlSessionTask != nil {
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+                githubData.urlSessionTask?.resume()
+            }
         }
         
     }
@@ -66,30 +55,14 @@ class SearchViewController: UITableViewController, UISearchBarDelegate {
         if segue.identifier == "Detail" {
             guard let detailVC = segue.destination as? DetailViewController  else {return}
             detailVC.searchVC = self
+            detailVC.githubData = githubData
         }
         
     }
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return githubRepositories.count
-    }
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = UITableViewCell()
-        let repositoryData = githubRepositories[indexPath.row]
-        cell.textLabel?.text = repositoryData["full_name"] as? String ?? ""
-        cell.detailTextLabel?.text = repositoryData["language"] as? String ?? ""
-        cell.tag = indexPath.row
-        return cell
-        
-    }
-    
+
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // 画面遷移時に呼ばれる
-        touchedCellIndex = indexPath.row
+        githubData.touchedCellIndex = indexPath.row
         performSegue(withIdentifier: "Detail", sender: self)
-        
     }
-    
 }

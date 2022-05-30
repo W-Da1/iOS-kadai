@@ -21,20 +21,19 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var forksLabel: UILabel!
     @IBOutlet weak var isuuesLabel: UILabel!
     
-    var searchVC: SearchViewController!
+    var searchVC: SearchViewController?
+    var githubData: GithubData?
         
     override func viewDidLoad() {
         super.viewDidLoad()
-  
-        guard let index = searchVC.touchedCellIndex else {return}
-        let gitRepository = searchVC.githubRepositories[index]
-        
-        programLangageLabel.text = "Written in \(gitRepository["language"] as? String ?? "")"
-        starsLabel.text = "\(gitRepository["stargazers_count"] as? Int ?? 0) stars"
-        watchersLabel.text = "\(gitRepository["watchers_count"] as? Int ?? 0) watchers" //APIの使用が変更されwatchers_countはstargazers_countの数値が出力されるとのこと
-        forksLabel.text = "\(gitRepository["forks_count"] as? Int ?? 0) forks"
-        isuuesLabel.text = "\(gitRepository["open_issues_count"] as? Int ?? 0) open issues"
-        getImage(gitRepository)
+        githubData?.setTouchedRepository()
+        guard let repository = githubData.touchedGitHubRepository else {return}
+        programLangageLabel.text = "Written in \(repository["language"] as? String ?? "")"
+        starsLabel.text = "\(repository["stargazers_count"] as? Int ?? 0) stars"
+        watchersLabel.text = "\(repository["watchers_count"] as? Int ?? 0) watchers" //APIの使用が変更されwatchers_countはstargazers_countの数値が出力されるとのこと
+        forksLabel.text = "\(repository["forks_count"] as? Int ?? 0) forks"
+        isuuesLabel.text = "\(repository["open_issues_count"] as? Int ?? 0) open issues"
+        getImage(repository)
     }
     
     func getImage(_ gitRepository : [String: Any]){
