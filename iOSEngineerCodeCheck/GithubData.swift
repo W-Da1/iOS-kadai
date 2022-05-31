@@ -14,7 +14,7 @@ class GithubData {
     var githubRepositories: [[String: Any]]=[]
     var urlSessionTask: URLSessionTask?
     var touchedCellIndex: Int?
-    var touchedGitHubRepository: [String: Any]?
+    var touchedGithubRepository: [String: Any]?
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return githubRepositories.count
@@ -44,8 +44,31 @@ class GithubData {
     func setTouchedRepository() {
         guard let index = touchedCellIndex else {return}
         if githubRepositories.count != 0 {
-            touchedGitHubRepository = githubRepositories[index] //範囲外指定対処あった方がいいか
+            touchedGithubRepository = githubRepositories[index]
         }
     }
-
+    
+    /*enum CMD {
+        case stringVal
+        case intVal
+        
+        func parse<T>(key: String) -> T {
+            switch self {
+            case .stringVal:
+                let val : String = stringRepositoryData(key: String)
+                return val as! T
+            case .intVal:
+                let val: Int = touchedGithubRepository?[key] as? Int ?? 0
+                return val as! T
+            }
+        }
+    }
+    
+    func stringRepositoryData(key: String) -> String {
+        return touchedGithubRepository?[key] as? String ?? ""
+    }
+    
+    func intRepositoryData(key: String) -> Int {
+        return touchedGithubRepository?[key] as? Int ?? 0
+    }*/
 }

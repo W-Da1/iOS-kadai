@@ -28,9 +28,7 @@ class SearchViewController: UITableViewController, UISearchBarDelegate {
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if githubData.urlSessionTask != nil {
-            githubData.urlSessionTask?.cancel()
-        }
+        githubData.urlSessionTask?.cancel()
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
