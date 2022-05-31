@@ -37,7 +37,7 @@ class SearchViewController: UITableViewController, UISearchBarDelegate {
         
         if searchWord.count != 0 {
             // urlに含められない形式のsearchWordやリポジトリからのデータの受け取りに失敗した時は何もしない
-            githubData.createURLSessionTask(searchWord)
+            githubData.getRepositories(searchWord)
             if githubData.urlSessionTask != nil {
                 DispatchQueue.main.async {
                     self.tableView.reloadData()

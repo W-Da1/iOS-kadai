@@ -33,14 +33,12 @@ class DetailViewController: UIViewController {
         watchersLabel.text = "\(repository["watchers_count"] as? Int ?? 0) watchers" //APIの使用が変更されwatchers_countはstargazers_countの数値が出力されるとのこと
         forksLabel.text = "\(repository["forks_count"] as? Int ?? 0) forks"
         isuuesLabel.text = "\(repository["open_issues_count"] as? Int ?? 0) open issues"
-        getImage(repository)
+        titleLabel.text = repository["full_name"] as? String
+        getImage()
     }
     
-    func getImage(_ gitRepository : [String: Any]){
-        
-        titleLabel.text = gitRepository["full_name"] as? String
-        
-        guard let owner = gitRepository["owner"] as? [String: Any] else {return}
+    func getImage() {
+        guard let owner = githubData?.repository["owner"] as? [String: Any] else {return}
         guard let imgURL = owner["avatar_url"] as? String else {return}
         URLSession.shared.dataTask(with: URL(string: imgURL)!) { [weak self] (data, res, err) in
             guard let data = data else {return}
@@ -49,6 +47,13 @@ class DetailViewController: UIViewController {
                 self?.imageView.image = img
             }
         }.resume()
+        /*if githubData.urlSessionTask != nil {
+            
+        }*/
+        DispatchQueue.main.async {
+            self.imageView.image = img
+        }
+        githubData.urlSessionTask?.resume()
     }
 
 }

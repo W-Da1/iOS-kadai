@@ -17,7 +17,7 @@ class GithubData {
     var touchedGithubRepository: [String: Any]?
 
     // URLSessionTaskを作成する
-    func createURLSessionTask(_ searchWord : String) {
+    func getRepositories(_ searchWord : String) {
         let repositoryURL = "https://api.github.com/search/repositories?q=\(searchWord)"
         guard let url = URL(string : repositoryURL) else {return}
         urlSessionTask = URLSession.shared.dataTask(with: url) { [weak self] (data, response, error) in
