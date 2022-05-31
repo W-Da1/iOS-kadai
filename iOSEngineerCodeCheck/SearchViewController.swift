@@ -63,4 +63,17 @@ class SearchViewController: UITableViewController, UISearchBarDelegate {
         githubData.touchedCellIndex = indexPath.row
         performSegue(withIdentifier: "Detail", sender: self)
     }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return githubData.githubRepositories.count
+    }
+
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell()
+        let repositoryData = githubData.githubRepositories[indexPath.row]
+        cell.textLabel?.text = repositoryData["full_name"] as? String ?? ""
+        cell.detailTextLabel?.text = repositoryData["language"] as? String ?? ""
+        cell.tag = indexPath.row
+        return cell
+    }
 }

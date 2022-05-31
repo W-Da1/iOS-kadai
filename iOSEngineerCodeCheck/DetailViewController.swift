@@ -50,4 +50,5 @@ class DetailViewController: UIViewController {
             }
         }.resume()
     }
+
 }
