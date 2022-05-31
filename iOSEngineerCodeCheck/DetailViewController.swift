@@ -34,26 +34,11 @@ class DetailViewController: UIViewController {
         forksLabel.text = "\(repository["forks_count"] as? Int ?? 0) forks"
         isuuesLabel.text = "\(repository["open_issues_count"] as? Int ?? 0) open issues"
         titleLabel.text = repository["full_name"] as? String
-        getImage()
-    }
-    
-    func getImage() {
-        guard let owner = githubData?.repository["owner"] as? [String: Any] else {return}
-        guard let imgURL = owner["avatar_url"] as? String else {return}
-        URLSession.shared.dataTask(with: URL(string: imgURL)!) { [weak self] (data, res, err) in
-            guard let data = data else {return}
-            guard let img = UIImage(data: data) else {return}
-            DispatchQueue.main.async {
-                self?.imageView.image = img
-            }
-        }.resume()
-        /*if githubData.urlSessionTask != nil {
-            
-        }*/
-        DispatchQueue.main.async {
+
+        githubData?.getImage()
+        if let img = githubData?.gitAccountImage {
             self.imageView.image = img
         }
-        githubData.urlSessionTask?.resume()
     }
 
 }

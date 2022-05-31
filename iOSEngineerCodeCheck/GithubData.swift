@@ -15,6 +15,7 @@ class GithubData {
     var urlSessionTask: URLSessionTask?
     var touchedCellIndex: Int?
     var touchedGithubRepository: [String: Any]?
+    var gitAccountImage: UIImage?
 
     // URLSessionTaskを作成する
     func getRepositories(_ searchWord : String) {
@@ -28,6 +29,7 @@ class GithubData {
         }
     }
     
+    // 選択されたリポジトリー情報を読み込む
     func setTouchedRepository() {
         guard let index = touchedCellIndex else {return}
         if githubRepositories.count != 0 {
@@ -35,27 +37,16 @@ class GithubData {
         }
     }
     
-    /*enum CMD {
-        case stringVal
-        case intVal
-        
-        func parse<T>(key: String) -> T {
-            switch self {
-            case .stringVal:
-                let val : String = stringRepositoryData(key: String)
-                return val as! T
-            case .intVal:
-                let val: Int = touchedGithubRepository?[key] as? Int ?? 0
-                return val as! T
+    //アカウントの画像を読み込む
+    func getImage() {
+        guard let owner = touchedGithubRepository?["owner"] as? [String: Any] else {return}
+        guard let imgURL = owner["avatar_url"] as? String else {return}
+        URLSession.shared.dataTask(with: URL(string: imgURL)!) { [weak self] (data, res, err) in
+            guard let data = data else {return}
+            guard let img = UIImage(data: data) else {return}
+            DispatchQueue.main.async {
+                self?.gitAccountImage = img
             }
-        }
+        }.resume()
     }
-    
-    func stringRepositoryData(key: String) -> String {
-        return touchedGithubRepository?[key] as? String ?? ""
-    }
-    
-    func intRepositoryData(key: String) -> Int {
-        return touchedGithubRepository?[key] as? Int ?? 0
-    }*/
 }
