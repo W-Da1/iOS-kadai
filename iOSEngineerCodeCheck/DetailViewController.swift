@@ -23,7 +23,7 @@ class DetailViewController: UIViewController {
     
     var searchVC: SearchViewController?
     var githubData: GithubData?
-        
+
     override func viewDidLoad() {
         super.viewDidLoad()
         githubData?.setTouchedRepository()
@@ -37,10 +37,12 @@ class DetailViewController: UIViewController {
 
         githubData?.getAccountImage()
         if githubData?.urlSessionTask != nil {
-            DispatchQueue.main.async { [weak self] in
-                self?.imageView.image = self?.githubData?.gitAccountImage
+            githubData?.queue.async { [weak self] in
+                DispatchQueue.main.async { [weak self] in
+                    self?.imageView.image = self?.githubData?.gitAccountImage
+                }
+                self?.githubData?.urlSessionTask?.resume()
             }
-            githubData?.urlSessionTask?.resume()
         }
     }
 

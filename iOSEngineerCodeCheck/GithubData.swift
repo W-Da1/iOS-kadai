@@ -17,6 +17,8 @@ class GithubData {
     var touchedGithubRepository: [String: Any]?
     var gitAccountImage: UIImage?
 
+    let queue = DispatchQueue(label: "com.iOSEngineerCodeCheck.queue", qos: .default)
+    
     // URLSessionTaskを作成する
     func createURLSessionTask(_ searchWord : String) {
         let repositoryURL = "https://api.github.com/search/repositories?q=\(searchWord)"
