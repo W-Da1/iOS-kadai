@@ -51,16 +51,18 @@ guard let ~ else {return} を使用し，以下の項目に対応した．
 - レイアウトエラー
 stackviewの位置が定まっていなかったので修正.
 - メモリリーク
-クロージャによる循環参照が原因でメモリリークが発生するよう．以下の記事を参考に[weak self]追加で対処．
+クロージャによる循環参照が原因でメモリリークが発生するようです．以下の記事を参考に[weak self]追加で対処．
 [`参考1`](https://tm-progapp.hatenablog.com/entry/2021/01/21/215819) : Swiftで循環参照によるメモリリークを起こしてしまった話
 - パースエラー
 ViewController2.swiftにて,閲覧者数を取得するキーワード"wathcer_count"がtypo.修正済みだが，APIの仕様変更により，現在このキーワードで取得できるのはスター数とのことだった．※少し調査しましたが，閲覧者数の取得方法はわかりま線でした．
 #### 4.FatVC
-- 本プロジェクトは ViewController が必要以上の責務を抱えており、いわゆる Fat VC 状態です。最低限の責務の切り出しをしてあげましょう。
-GitAPIの処理がViewController内に記述されていたので，切り出しを試みた．※結果はshokyu-endブランチに入っています．こちらはバグがあり，正しく動作しないものとなっております．原因はAPIの処理の中にsearchViewController.tableView.reloadData()が入っており，うまくViewControllerとAPI処理を切り分けられていないことにあると思います．アドバイスいただけると幸いです．
+    GitAPIの処理がViewController内に記述されていたので，GithubData.swiftへの切り出しを試みた．その中で描画処理と情報取得を同時に行うため，GithubData内でDispatchQueueを作成し対処を試みた．※インターネットからの情報取得の処理にバグがあるようで，1回目の取得がうまくいきません．フィードバックいただければ幸いです．
 
 コードチェックの課題 Issue は全て [`課題`](https://github.com/yumemi/ios-engineer-codecheck/milestone/1) Milestone がついており、難易度に応じて Label が [`初級`](https://github.com/yumemi/ios-engineer-codecheck/issues?q=is%3Aopen+is%3Aissue+label%3A初級+milestone%3A課題)、[`中級`](https://github.com/yumemi/ios-engineer-codecheck/issues?q=is%3Aopen+is%3Aissue+label%3A中級+milestone%3A課題+) と [`ボーナス`](https://github.com/yumemi/ios-engineer-codecheck/issues?q=is%3Aopen+is%3Aissue+label%3Aボーナス+milestone%3A課題+) に分けられています。課題の必須／選択は下記の表とします：
 
+#### 5.その他
+    ViewController.swift,ViewController2.swift→SearchViewController.swift, DetailViewController.swiftに名前変更
+    
 |   | 初級 | 中級 | ボーナス
 |--:|:--:|:--:|:--:|
 | 新卒／未経験者 | 必須 | 選択 | 選択 |
