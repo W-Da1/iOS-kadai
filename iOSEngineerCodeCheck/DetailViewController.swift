@@ -35,9 +35,12 @@ class DetailViewController: UIViewController {
         isuuesLabel.text = "\(repository["open_issues_count"] as? Int ?? 0) open issues"
         titleLabel.text = repository["full_name"] as? String
 
-        githubData?.getImage()
-        if let img = githubData?.gitAccountImage {
-            self.imageView.image = img
+        githubData?.getAccountImage()
+        if githubData?.urlSessionTask != nil {
+            DispatchQueue.main.async { [weak self] in
+                self?.imageView.image = self?.githubData?.gitAccountImage
+            }
+            githubData?.urlSessionTask?.resume()
         }
     }
 

@@ -18,7 +18,7 @@ class GithubData {
     var gitAccountImage: UIImage?
 
     // URLSessionTaskを作成する
-    func getRepositories(_ searchWord : String) {
+    func createURLSessionTask(_ searchWord : String) {
         let repositoryURL = "https://api.github.com/search/repositories?q=\(searchWord)"
         guard let url = URL(string : repositoryURL) else {return}
         urlSessionTask = URLSession.shared.dataTask(with: url) { [weak self] (data, response, error) in
@@ -38,15 +38,14 @@ class GithubData {
     }
     
     //アカウントの画像を読み込む
-    func getImage() {
+    func getAccountImage() {
         guard let owner = touchedGithubRepository?["owner"] as? [String: Any] else {return}
         guard let imgURL = owner["avatar_url"] as? String else {return}
-        URLSession.shared.dataTask(with: URL(string: imgURL)!) { [weak self] (data, res, err) in
+        guard let url = URL(string : imgURL) else {return}
+        urlSessionTask = URLSession.shared.dataTask(with: url) { [weak self] (data, res, err) in
             guard let data = data else {return}
             guard let img = UIImage(data: data) else {return}
-            DispatchQueue.main.async {
-                self?.gitAccountImage = img
-            }
-        }.resume()
+            self?.gitAccountImage = img
+        }
     }
 }
