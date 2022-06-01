@@ -56,12 +56,11 @@ stackviewの位置が定まっていなかったので修正.
 - パースエラー
 ViewController2.swiftにて,閲覧者数を取得するキーワード"wathcer_count"がtypo.修正済みだが，APIの仕様変更により，現在このキーワードで取得できるのはスター数とのことだった．※少し調査しましたが，閲覧者数の取得方法はわかりま線でした．
 #### 4.FatVC
-    GitAPIの処理がViewController内に記述されていたので，GithubData.swiftへの切り出しを試みた．その中で描画処理と情報取得を同時に行うため，GithubData内でDispatchQueueを作成し対処を試みた．※インターネットからの情報取得の処理にバグがあるようで，1回目の取得がうまくいきません．フィードバックいただければ幸いです．
+GitAPIの処理がViewController内に記述されていたので，GithubData.swiftへの切り出しを試みた．その中で描画処理と情報取得を同時に行うため，GithubData内でDispatchQueueを作成し対処を試みた．※インターネットからの情報取得の処理にバグがあるようで，1回目の取得がうまくいきません．フィードバックいただければ幸いです．
+#### 5.その他
+ViewController.swift,ViewController2.swift→SearchViewController.swift, DetailViewController.swiftに名前変更
 
 コードチェックの課題 Issue は全て [`課題`](https://github.com/yumemi/ios-engineer-codecheck/milestone/1) Milestone がついており、難易度に応じて Label が [`初級`](https://github.com/yumemi/ios-engineer-codecheck/issues?q=is%3Aopen+is%3Aissue+label%3A初級+milestone%3A課題)、[`中級`](https://github.com/yumemi/ios-engineer-codecheck/issues?q=is%3Aopen+is%3Aissue+label%3A中級+milestone%3A課題+) と [`ボーナス`](https://github.com/yumemi/ios-engineer-codecheck/issues?q=is%3Aopen+is%3Aissue+label%3Aボーナス+milestone%3A課題+) に分けられています。課題の必須／選択は下記の表とします：
-
-#### 5.その他
-    ViewController.swift,ViewController2.swift→SearchViewController.swift, DetailViewController.swiftに名前変更
     
 |   | 初級 | 中級 | ボーナス
 |--:|:--:|:--:|:--:|
