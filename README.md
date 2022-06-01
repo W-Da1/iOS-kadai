@@ -26,10 +26,12 @@
 ## 取り組んだ課題
 #### 1.ソースの可読性向上
 - 命名規約（参考：Swift API Design Guidelines）
+
 [`参考1`](https://qiita.com/fuwamaki/items/f2df71723ab277dffc29) :Swiftの命名規則を理解する（Swift API Design Guidelines - Naming 日本語まとめ）
 [`参考2`](https://www.swift.org/documentation/api-design-guidelines/#naming) :swift.org（Naming）
 をみながら対策を行なった．
 - ネスト
+
 [`参考1`](https://techblog.recochoku.jp/8058) :【Swift】安全にアンラップするために 〜!（強制アンラップ）とif letとguard letと??（Nil coalescing operator）の使い分け〜
 guard let ~ else {return} を使用し，if文による深いネストを極力避けた．
 - インデント
@@ -46,12 +48,14 @@ guard let ~ else {return} を使用し，以下の項目に対応した．
 - 強制ダウンキャスト
 - 不必要なIUO
 - 想定外の nil の握り潰し
+
 [`参考1`](https://techblog.recochoku.jp/8058) :【Swift】安全にアンラップするために 〜!（強制アンラップ）とif letとguard letと??（Nil coalescing operator）の使い分け〜
 #### 3.バグを修正
 - レイアウトエラー
 stackviewの位置が定まっていなかったので修正.
 - メモリリーク
 クロージャによる循環参照が原因でメモリリークが発生するようです．以下の記事を参考に[weak self]追加で対処．
+
 [`参考1`](https://tm-progapp.hatenablog.com/entry/2021/01/21/215819) : Swiftで循環参照によるメモリリークを起こしてしまった話
 - パースエラー
 ViewController2.swiftにて,閲覧者数を取得するキーワード"wathcer_count"がtypo.修正済みだが，APIの仕様変更により，現在このキーワードで取得できるのはスター数とのことだった．※少し調査しましたが，閲覧者数の取得方法はわかりま線でした．
