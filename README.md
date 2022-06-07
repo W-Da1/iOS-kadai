@@ -83,6 +83,3 @@ ViewController.swift,ViewController2.swift→SearchViewController.swift, DetailV
 |--:|:--:|:--:|:--:|
 | 新卒／未経験者 | 必須 | 選択 | 選択 |
 | 中途／経験者 | 必須 | 必須 | 選択 |
-=======
-# iOS-kadai
->>>>>>> fb245ed1015a3bf2cb7c4c47bb7a73f1a4249392
