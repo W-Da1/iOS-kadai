@@ -70,7 +70,7 @@ ViewController2.swiftにて,閲覧者数を取得するキーワード"wathcer_c
 
 
 #### 4.FatVC
-GitAPIの処理がViewController内に記述されていたので，GithubData.swiftへの切り出しを試みた．その中で描画処理と情報取得を同時に行うため，GithubData内でDispatchQueueを作成し対処を試みた．※インターネットからの情報取得の処理にバグがあるようで，1回目の取得がうまくいきません．フィードバックいただければ幸いです．
+GitAPIの処理がViewController内に記述されていたので，GithubData.swiftへの切り出しを試みた．その中で描画処理と情報取得を同時に行うため，GithubData内でDispatchQueueを作成し対処を試みた．※インターネットからの情報取得の処理周辺にバグがあるようで，1回目の取得がうまくいきません．フィードバックいただければ幸いです．
 
 
 #### 5.その他
